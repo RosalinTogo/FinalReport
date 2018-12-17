@@ -1,0 +1,54 @@
+use datashareits
+--------------------------------
+Select * from dbo.LAUsers
+select * from dbo.Mahasiswa
+select * from dbo.Dosen
+--------------------------------
+--menampilkan data user
+select distinct Username, count(Nama) as TotalUSer
+from LAUsers
+group by Username
+order by TotalUSer asc
+--------------------------------
+--menampilkan data mahasiswa 
+SELECT distinct FakultasMhs, JurusanMhs, count (NamaMhs) as TotaLMahasiswa
+FROM Mahasiswa
+Group by FakultasMhs, JurusanMhs
+Order by TotaLMahasiswa Asc
+-----------------------------------
+--menampilkan dosen per fakultas
+select distinct Fakultas, Jurusan, count(NamaDosen) as TotalDosen
+from Dosen
+group by Fakultas, Jurusan
+order by TotalDosen asc
+----------------------------------------
+--menampilkan user yang mengakses di hari Sabtu
+SELECT FakultasMhs, JurusanMhs, count (NamaMhs) as totalsaturday
+FROM Mahasiswa
+where Last_AccessMhs like 'Saturday%'
+Group by FakultasMhs, JurusanMhs
+Order by totalsaturday Desc
+---------------------------------
+--menampilkan user yang mengakses di hari Minggu
+SELECT FakultasMhs, JurusanMhs, count (NamaMhs) as totalsunday
+FROM Mahasiswa
+where Last_AccessMhs like 'Sunday%'
+Group by FakultasMhs, JurusanMhs
+Order by totalsunday Desc
+
+ -----------------------------------------------------------
+ --jumlah mahasiswa yang mengakses di hari senin hingga jumat
+SELECT FakultasMhs, JurusanMhs,  count (NamaMhs) as TotaLMahasiswa
+FROM Mahasiswa
+Group by FakultasMhs, JurusanMhs
+Order by TotaLMahasiswa Desc
+(SELECT DISTINCT NamaMhs, JurusanMhs, Last_AccessMHs
+FROM Mahasiswa 
+where Last_AccessMhs not like 'Saturday%')
+UNION (SELECT DISTINCT NamaMhs, JurusanMhs, Last_AccessMHs 
+FROM Mahasiswa 
+where Last_AccessMhs not like 'Sunday%')
+
+
+
+
